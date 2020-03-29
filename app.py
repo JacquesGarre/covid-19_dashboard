@@ -12,12 +12,12 @@ import graph_tab3 as graph_tab3
 import chloro_map_tab4 as chloro_map_tab4
 import colors as colors
 
-
-
 colors = colors.get()
 
 app = dash.Dash(__name__,)
+
 app.config.suppress_callback_exceptions = True
+
 app.layout = html.Div(style={'backgroundColor': colors['background']}, children=[
     html.H1(
         children='Covid-19 Statistics',
@@ -57,10 +57,11 @@ def return_graph(country):
     return graph_tab3.get_content(country)
 
 @app.callback(Output('french_map', 'children'),
-              [Input('check_option', 'value')])
-def return_chloroMap(case):
-    print('go chloro')
-    return chloro_map_tab4.get_content(case)
+              [Input('check_option', 'value'),
+               Input('crossfilter-year-slider', 'value')])
+def return_chloroMap(case, id_date):
+    print('go chloro' + 'date = '+str(id_date))
+    return chloro_map_tab4.get_content(case, id_date)
 
 
 
